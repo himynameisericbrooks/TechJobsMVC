@@ -1,9 +1,10 @@
 ﻿<div class="container body-content">
+    @*This h1 does nothing but add blank space?*@
     <h1>@ViewBag.title</h1>
     <h2 class="centered">View Jobs By Category</h2>
 </div>
 
-<table class="centeredTable">
+<table class="centeredTable table">
     <tr>
         @foreach(var column in ViewBag.columns)
         {
@@ -15,19 +16,31 @@
             //TODO #2: Complete the View Jobs By Category Table
         }
 
-        <td></td> @* Feel free to remove or modify this element if necessary. *@
+    @* Feel free to remove or modify this element if necessary. *@
+
+        <td>
+            <ul>
+                <li>
+                    <a asp-controller="List" asp-action="Jobs" asp-route-column="All">All</a>
+                </li>
+            </ul>
+        </td>
+
+        @* ViewBag.tableChoices (from ListController.cs) is a dictionary which holds Employer, Position Type, Core Competency, Location and a list of associated values for each job*@
+        @*category represents a single string/List pair corresponding to one category (example: employer)*@
+        @*These two together essentially hone us in on which column/row we are working with*@
         @foreach (var category in ViewBag.tableChoices)
         {
             <td>
                 <ul>
                     @foreach (var item in category.Value)
                     {
-                        <li>
+                        <li> 
                             <a asp-controller="List" asp-action="Jobs" asp-route-column="@category.Key" asp-route-value="@item">@item</a>
                         </li>
                     }
                 </ul>
-            </td>
+           </td>
         }
     </tr>
-        </table>
+</table>
